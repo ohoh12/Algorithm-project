@@ -1,0 +1,107 @@
+#include<stdio.h>
+#include <windows.h>
+#include <malloc.h>
+
+typedef int DATA;
+
+typedef struct NODE {
+    DATA data;
+    struct NODE *link;
+}NODE;
+
+void print_list(NODE *node);
+int selectMenu();
+void clear();
+
+
+int main(void) {
+    selectMenu();
+    return 0;
+}
+
+void print_list(NODE *node) {
+
+    NODE *p;
+    p = node;
+    while(p) {
+        printf("%d, ",p->data);
+        p = p->link;
+    }
+}
+void clear(NODE **node)
+{
+    NODE *temp = NULL;
+    NODE *a = *node;
+    while (a)
+    {
+        temp = a;
+        a = a->link;
+        free(temp);
+    }
+    *node = NULL;
+}
+int selectMenu(){
+	NODE *node;
+	NODE *curr = NULL, *temp = NULL;
+	node = NULL;
+	int data, n;
+	  	
+  	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+  	printf("=========================\n");
+  	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+  	printf(" 1번 : 책번호 입력받기    ||  2번 : 책 모두제거하기\n 3번 : 현재 책장 상태보기 ||  4번 : 종료\n");
+	while(1){
+
+  	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+  		printf("=========================\n");
+  	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+        printf("무엇을 선택하시겠습니까? \n : ");
+
+    scanf("%d", &n); //얘가 선택하는거 1~5번 까지 5번은 정렬하기로 하자
+        if(n == 4){
+        	 
+        	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+        	printf("=========================\n");
+        	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+            printf("%19s","종료되었습니다\n");
+            Sleep(1000);
+			system("cls");
+			Sleep(1000); 
+            
+        }
+        switch(n){
+            case 1: 
+                 printf("값을 입력해주세요 : ");
+                scanf("%d", &data);
+
+                                curr = (NODE *)malloc(sizeof(NODE));
+                                curr->data = data;
+                    curr->link = NULL;
+
+                                if(temp == NULL) node = curr; 
+                                else temp->link = curr;
+
+                                temp = curr;           
+                break;
+            case 2:
+            	clear(&node);
+                break;
+            case 3:
+                 printf("현재 책장안에 들어있는 책번호는 [");
+                                print_list(node);
+                printf("]\n");           	
+                break;
+            case 5:
+                break;
+            default:
+                  	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+  					printf("=========================\n");
+  					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+  					printf(" 1번 : 책번호 입력받기    ||  2번 : 책 모두제거하기\n 3번 : 현재 책장 상태보기 ||  4번 : 종료\n");
+
+        }
+
+  }
+
+  return 0;
+} 
